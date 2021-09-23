@@ -3,13 +3,52 @@
 ## Anggota:
 - ### Muhammad Daffa 05111940000175
 - ### Putu Krisna Andyartha 05111940000082
-- ### Ananda ...
+- ### Putu Ananda Satria Adi 05111940000113
 
-## 1.
-## 2.
-## 3.
-## 4.
-## 5.
+## 1. Sebutkan webserver yang digunakan pada "ichimarumaru.tech"! 
+  Pertama kita menggunakan *display filter* `http.host contains ichimarumaru.tech` kemudian “Follow  > TCP Stream” agar bisa mendapatkan response dari request di path login.php<br />
+  ![image](https://user-images.githubusercontent.com/57354564/134455783-6a824b2d-7d0d-4c12-aacb-9a71c4981b66.png)<br />
+  Tampilan saaat akan Follow TCP Stream<br />
+  <br />
+  ![image](https://user-images.githubusercontent.com/57354564/134455907-6c559e0a-1761-4acd-a350-1fc8447006da.png)<br />
+  Dari hasil Follow TCP Stream diatas, dalam respons header terdapat header dengan value `nginx/1.18.0(Ubuntu)`  
+  <br />
+## 2. Temukan paket dari web-web yang menggunakan basic authentication method!
+  Dengan menggunakan *display filter* `http.authbasic` maka akan muncul paket-paket yang menggunakan *basic authentication*  
+  ![image](https://user-images.githubusercontent.com/57354564/134456109-6e8dbd68-5d54-4a9a-b657-b78ea980a814.png)<br />
+  Dari hasil filter diatas, hanya didapatkan 1 web yang menggunakan *basic authentication* yaitu web `basic.icmarumaru.tech`<br /><br />
+## 3. Ikuti perintah di basic.ichimarumaru.tech! Username dan password bisa didapatkan dari file .pcapng!
+  Dengan menggunakan hasil dari filter yang sama pada nomor 2 kita juga bisa mendapatkan username dan password untuk web basic.ichimarumaru.tech  
+  ![image](https://user-images.githubusercontent.com/57354564/134456277-9829c3cf-e259-428a-9a56-c24adfd82eb2.png)  
+  Kita cukup melakukan navigasi ke bagian `Hypertext Transfer Protocol` kemudian `Authorization` maka akan muncul header Credentials dimana username dan password hanya dipisahkan menggunakan ':'.<br /><br />
+  Sehingga didapatkan:<br />
+  Username : `kuncimenujulautan`<br />
+  Password : `tQKEJFbgNGC1NCZlWAOjhyCOm6o3xEbPkJhTciZN`<br />
+  <br />
+  ![image](https://user-images.githubusercontent.com/57354564/134456416-7f7eae7c-0285-4ad3-8b13-3e3cbf3a1afa.png)<br />
+  Setelah melakukan login menggunakan username dan password yang didapatkan, akan muncul halaman seperti diatas dan diminta untuk memasukkan konfugurasi pengkabelan T568A. Diatas merupakan screenshot setelah textbox diisi dengan jawaban.<br /><br />
+## 4. Temukan paket mysql yang mengandung perintah query select!
+  Untuk dapat menyaring perintah query select dalam mysql, kita dapat menggunakan display filter `mysql contains select`<br />
+  ![image](https://user-images.githubusercontent.com/57354564/134456700-bf47a31a-1bf8-4380-bee6-c26d7b2f8389.png)<br />
+  ![image](https://user-images.githubusercontent.com/57354564/134456707-a9c85cd2-50a2-4a78-a3c2-b63d76def022.png)<br />
+  Didapatkan 2 query dengan select yaitu:<br />
+  1.	`select username from users`<br />
+  2.	`select count(*) from users`<br />
+  <br />
+  Setelah itu mencoba melakukan tracing paket menggunakan “Follow > TCP Stream”<br />
+  ![image](https://user-images.githubusercontent.com/57354564/134457054-2dc51b8e-4a37-4f98-a7b1-4a56af531fa4.png)<br />
+  Didapatkan 1 query select kembali yaitu:<br />
+  3.	`SELECT DATABASE()`<br />
+
+## 5. Login ke portal.ichimarumaru.tech kemudian ikuti perintahnya! Username dan password bisa didapat dari query insert pada table users dari file .pcap!
+  ![image](https://user-images.githubusercontent.com/57354564/134456940-6da02bda-275b-4a91-9837-18bcb8fe66d4.png)<br />
+  Dari hasil “Follow > TCP Stream” pada no 4 didapatkan query insert dengan username dan password sebagai berikut:<br />
+  
+  Username : `akakanomi`<br />
+  Password : `pemisah4lautan`<br /><br />
+  ![image](https://user-images.githubusercontent.com/57354564/134456963-80196144-8011-44a4-b177-e80ac3a32779.png)<br />
+  Setelah login pada portal.ichimarumaru.tech tampilan adalah sebagai berikut setelah diisi dengan jawaban.
+
 ## 6. Cari username dan password ketika melakukan login ke FTP Server!
 
   Dengan memasukkan `ftp.request.command == PASS` pada filter display, maka muncul list packet dengan request login FTP
